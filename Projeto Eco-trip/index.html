@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculadora interativa de emissão de CO2. Calcule sua pegada de carbono e receba dicas personalizadas para redução.">
+    <title>🌿 Calculadora de Emissão de CO2 - Eco-trip</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Semântico -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            <h1 class="header-title">🌿 Calculadora de Emissão de CO2</h1>
+            <p class="header-subtitle">Descubra sua pegada de carbono e aprenda como reduzi-la</p>
+        </div>
+        <nav class="nav-header" aria-label="Navegação principal">
+            <ul>
+                <li><a href="#intro" class="nav-link">Sobre</a></li>
+                <li><a href="#calculator" class="nav-link">Calcular</a></li>
+                <li><a href="#tips" class="nav-link">Dicas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main role="main">
+        <!-- Seção de Introdução -->
+        <section id="intro" class="intro-section" aria-labelledby="intro-title">
+            <div class="container">
+                <h2 id="intro-title">O que é Pegada de Carbono?</h2>
+                <article class="intro-content">
+                    <p>
+                        A <strong>pegada de carbono</strong> é a quantidade total de gases de efeito estufa (especialmente CO2) 
+                        produzida por nossas atividades diárias. Compreender sua pegada é o primeiro passo para viver de forma 
+                        mais sustentável e contribuir para um planeta mais saudável.
+                    </p>
+                    <p>
+                        Nesta calculadora, você pode estimar suas emissões em três categorias principais:
+                    </p>
+                    <ul class="intro-list">
+                        <li>🚗 <strong>Transporte:</strong> Deslocamentos diários</li>
+                        <li>⚡ <strong>Energia Residencial:</strong> Consumo elétrico da casa</li>
+                        <li>🍽️ <strong>Alimentação e Consumo:</strong> Dieta e hábitos de compra</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Seção Principal da Calculadora -->
+        <section id="calculator" class="calculator-section" aria-labelledby="calc-title">
+            <div class="container">
+                <h2 id="calc-title">Calcule sua Pegada de Carbono</h2>
+                
+                <form id="co2Form" class="co2-form" aria-label="Formulário de cálculo de emissão de CO2">
+                    
+                    <!-- Seção: Transporte -->
+                    <fieldset class="form-section">
+                        <legend class="section-title">🚗 Transporte</legend>
+                        
+                        <div class="form-group">
+                            <label for="transport-type" class="label-required">
+                                Tipo de transporte principal
+                                <span class="tooltip-icon" data-tooltip="Selecione o veículo que mais usa diariamente">?</span>
+                            </label>
+                            <select id="transport-type" name="transportType" required aria-describedby="transport-help">
+                                <option value="">-- Selecione --</option>
+                                <option value="carro-gasolina">Carro (gasolina)</option>
+                                <option value="carro-diesel">Carro (diesel)</option>
+                                <option value="carro-eletrico">Carro (elétrico)</option>
+                                <option value="moto">Moto/Scooter</option>
+                                <option value="onibus">Ônibus/Coletivo</option>
+                                <option value="trem">Trem/Metrô</option>
+                                <option value="bicicleta">Bicicleta/A pé</option>
+                            </select>
+                            <small id="transport-help">Informações baseadas em dados reais de emissão</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="km-diarios" class="label-required">
+                                Quilômetros diários
+                                <span class="tooltip-icon" data-tooltip="Quantos km você percorre por dia em média">?</span>
+                            </label>
+                            <input type="number" id="km-diarios" name="kmDiarios" min="0" max="500" step="0.1" 
+                                   placeholder="Ex: 30" required aria-describedby="km-help">
+                            <small id="km-help">Distância média percorrida diariamente</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dias-semana" class="label-required">
+                                Dias por semana que usa este transporte
+                                <span class="tooltip-icon" data-tooltip="Quantos dias da semana você o utiliza">?</span>
+                            </label>
+                            <input type="number" id="dias-semana" name="diasSemana" min="0" max="7" step="1" 
+                                   value="5" required aria-describedby="dias-help">
+                            <small id="dias-help">De 0 a 7 dias</small>
+                        </div>
+                    </fieldset>
+
+                    <!-- Seção: Energia Residencial -->
+                    <fieldset class="form-section">
+                        <legend class="section-title">⚡ Energia Residencial</legend>
+                        
+                        <div class="form-group">
+                            <label for="kwh-mensal" class="label-required">
+                                Consumo de energia (kWh/mês)
+                                <span class="tooltip-icon" data-tooltip="Verifique na sua conta de luz">?</span>
+                            </label>
+                            <input type="number" id="kwh-mensal" name="kwhMensal" min="0" max="1000" step="1" 
+                                   placeholder="Ex: 150" required aria-describedby="kwh-help">
+                            <small id="kwh-help">Consumo mensal informado na sua fatura de energia</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="energia-renovavel" class="label-required">
+                                Percentual de energia renovável
+                                <span class="tooltip-icon" data-tooltip="Energia solar, eólica, hidrelétrica">?</span>
+                            </label>
+                            <input type="range" id="energia-renovavel" name="energiaRenovavel" min="0" max="100" 
+                                   step="5" value="30" aria-describedby="renovavel-value">
+                            <div class="range-display">
+                                <span id="renovavel-value">30%</span> renovável
+                            </div>
+                            <small>Ajuste conforme sua concessionária ou painéis solares</small>
+                        </div>
+                    </fieldset>
+
+                    <!-- Seção: Alimentação e Consumo -->
+                    <fieldset class="form-section">
+                        <legend class="section-title">🍽️ Alimentação e Consumo</legend>
+                        
+                        <div class="form-group">
+                            <label class="label-required">
+                                Tipo de dieta principal
+                                <span class="tooltip-icon" data-tooltip="Como você classifica seu consumo de carne">?</span>
+                            </label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="dieta" value="vegan" required> 🌱 Vegana
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="dieta" value="vegetariana"> 🥗 Vegetariana
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="dieta" value="baixo-carboidrato"> 🥩 Carnívora/Alta proteína
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="dieta" value="mista" checked> 🍝 Mista (equilibrada)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consumo-plastico" class="label-required">
+                                Resíduos plásticos (kg/mês)
+                                <span class="tooltip-icon" data-tooltip="Estimativa de plástico que você descarta">?</span>
+                            </label>
+                            <input type="number" id="consumo-plastico" name="consumoPlastico" min="0" max="50" 
+                                   step="0.5" value="2" required aria-describedby="plastico-help">
+                            <small id="plastico-help">Incluindo embalagens e itens descartáveis</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reciclagem" class="label-required">
+                                Percentual de reciclagem
+                                <span class="tooltip-icon" data-tooltip="Quanto você recicla do lixo produzido">?</span>
+                            </label>
+                            <input type="range" id="reciclagem" name="reciclagem" min="0" max="100" 
+                                   step="10" value="50" aria-describedby="reciclagem-value">
+                            <div class="range-display">
+                                <span id="reciclagem-value">50%</span> reciclado
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="compras-online" class="label-required">
+                                Compras online por mês
+                                <span class="tooltip-icon" data-tooltip="Número aproximado de pedidos">?</span>
+                            </label>
+                            <input type="number" id="compras-online" name="comprasOnline" min="0" max="20" 
+                                   step="1" value="2" required aria-describedby="compras-help">
+                            <small id="compras-help">Considerando transporte e embalagem</small>
+                        </div>
+                    </fieldset>
+
+                    <!-- Botões de Ação -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" aria-label="Calcular emissão de CO2">
+                            📊 Calcular Minha Pegada
+                        </button>
+                        <button type="reset" class="btn btn-secondary" aria-label="Limpar formulário">
+                            🔄 Limpar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Seção de Resultados -->
+        <section id="results" class="results-section hidden" aria-labelledby="results-title" aria-live="polite">
+            <div class="container">
+                <h2 id="results-title">Seus Resultados</h2>
+                
+                <!-- Card Principal de Resultados -->
+                <article class="results-card">
+                    <div class="result-header">
+                        <h3>Emissão Anual Estimada</h3>
+                        <p class="result-value">
+                            <span id="total-co2">0</span> <span class="unit">kg CO2e/ano</span>
+                        </p>
+                        <p class="result-subtitle">
+                            <span id="monthly-co2">0</span> kg CO2e/mês
+                        </p>
+                    </div>
+
+                    <!-- Breakdown por Categoria -->
+                    <div class="results-breakdown">
+                        <div class="breakdown-item">
+                            <h4>🚗 Transporte</h4>
+                            <p class="breakdown-value"><span id="transport-result">0</span> kg CO2e/ano</p>
+                            <div class="progress-bar">
+                                <div id="transport-progress" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="breakdown-item">
+                            <h4>⚡ Energia</h4>
+                            <p class="breakdown-value"><span id="energia-result">0</span> kg CO2e/ano</p>
+                            <div class="progress-bar">
+                                <div id="energia-progress" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="breakdown-item">
+                            <h4>🍽️ Alimentação/Consumo</h4>
+                            <p class="breakdown-value"><span id="consumo-result">0</span> kg CO2e/ano</p>
+                            <div class="progress-bar">
+                                <div id="consumo-progress" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Equivalências Criativas -->
+                <article class="equivalences-card">
+                    <h3>Sua Emissão Equivale a...</h3>
+                    <div class="equivalences-grid">
+                        <div class="equivalence-item">
+                            <span class="equiv-icon">🌳</span>
+                            <p class="equiv-value"><span id="equiv-trees">0</span></p>
+                            <p class="equiv-label">árvores precisam absorver isso em 1 ano</p>
+                        </div>
+
+                        <div class="equivalence-item">
+                            <span class="equiv-icon">✈️</span>
+                            <p class="equiv-value"><span id="equiv-flights">0</span></p>
+                            <p class="equiv-label">voos de ida e volta para New York</p>
+                        </div>
+
+                        <div class="equivalence-item">
+                            <span class="equiv-icon">📺</span>
+                            <p class="equiv-value"><span id="equiv-netflix">0</span> horas</p>
+                            <p class="equiv-label">de streaming de 4K para gerar essa emissão</p>
+                        </div>
+
+                        <div class="equivalence-item">
+                            <span class="equiv-icon">🔋</span>
+                            <p class="equiv-value"><span id="equiv-smartphone">0</span></p>
+                            <p class="equiv-label">carregamentos de smartphone</p>
+                        </div>
+
+                        <div class="equivalence-item">
+                            <span class="equiv-icon">🚗</span>
+                            <p class="equiv-value"><span id="equiv-carro">0</span> km</p>
+                            <p class="equiv-label">em um carro a gasolina</p>
+                        </div>
+
+                        <div class="equivalence-item">
+                            <span class="equiv-icon">🏠</span>
+                            <p class="equiv-value"><span id="equiv-casa">0</span> casas</p>
+                            <p class="equiv-label">aquecidas por 1 mês com energia comum</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Comparativo Visual -->
+                <article class="comparison-card">
+                    <h3>Como Você Se Compara?</h3>
+                    <div class="comparison-visual">
+                        <div class="comparison-bar">
+                            <div class="bar-item">
+                                <p class="bar-label">Sua Pegada</p>
+                                <div class="bar-graphic">
+                                    <div id="user-bar" class="bar-fill bar-user" style="width: 70%"></div>
+                                </div>
+                                <p class="bar-value"><span id="user-value">0</span> kg</p>
+                            </div>
+
+                            <div class="bar-item">
+                                <p class="bar-label">Média Brasil</p>
+                                <div class="bar-graphic">
+                                    <div class="bar-fill bar-average" style="width: 100%"></div>
+                                </div>
+                                <p class="bar-value">4,620 kg</p>
+                            </div>
+
+                            <div class="bar-item">
+                                <p class="bar-label">Meta Sustentável</p>
+                                <div class="bar-graphic">
+                                    <div class="bar-fill bar-goal" style="width: 40%"></div>
+                                </div>
+                                <p class="bar-value">2,500 kg</p>
+                            </div>
+                        </div>
+                        <p class="comparison-note">
+                            Meta sustentável para limitar o aquecimento global a 1,5°C
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Ações e Compartilhamento -->
+                <div class="results-actions">
+                    <button class="btn btn-primary" id="share-button" aria-label="Compartilhar resultado">
+                        📤 Compartilhar Resultado
+                    </button>
+                    <button class="btn btn-secondary" id="back-button" aria-label="Voltar para o formulário">
+                        ◀ Voltar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Dicas -->
+        <section id="tips" class="tips-section" aria-labelledby="tips-title">
+            <div class="container">
+                <h2 id="tips-title">💡 Dicas para Reduzir Sua Pegada de Carbono</h2>
+
+                <div class="tips-grid">
+                    <article class="tip-card">
+                        <h3>🚴 Transporte Sustentável</h3>
+                        <ul>
+                            <li>Combine transporte público, bicicleta e caminhadas</li>
+                            <li>Carona solidária reduz emissões em até 75%</li>
+                            <li>Trabalho remoto 1-2 dias/semana economiza 20% em transporte</li>
+                            <li>Veículos elétricos reduzem em 70% as emissões</li>
+                        </ul>
+                    </article>
+
+                    <article class="tip-card">
+                        <h3>⚡ Economia de Energia</h3>
+                        <ul>
+                            <li>Painéis solares podem reduzir conta em até 80%</li>
+                            <li>Lâmpadas LED economizam 80% vs incandescente</li>
+                            <li>Desativar equipamentos em standby economiza 10% da energia</li>
+                            <li>Aquecedor solar reduz gás em 40%</li>
+                        </ul>
+                    </article>
+
+                    <article class="tip-card">
+                        <h3>🌱 Alimentação Consciente</h3>
+                        <ul>
+                            <li>Reduzir carne vermelha em 50% economiza 750kg CO2/ano</li>
+                            <li>Alimentação vegana reduz pegada em até 75%</li>
+                            <li>Comida local reduz transporte em 90%</li>
+                            <li>Desperdiçar comida é desperdiçar toda sua pegada</li>
+                        </ul>
+                    </article>
+
+                    <article class="tip-card">
+                        <h3>♻️ Consumo Responsável</h3>
+                        <ul>
+                            <li>Compre menos, escolha qualidade e durabilidade</li>
+                            <li>Roupas de segunda mão reduzem pegada em 90%</li>
+                            <li>Reparar em vez de descartar economiza recursos</li>
+                            <li>Reciclar corretamente fecha o ciclo de produção</li>
+                        </ul>
+                    </article>
+
+                    <article class="tip-card">
+                        <h3>🌍 Impacto Coletivo</h3>
+                        <ul>
+                            <li>Plante árvores - cada árvore absorve 20kg CO2/ano</li>
+                            <li>Influencie seu círculo para escolhas sustentáveis</li>
+                            <li>Vote e pressione por políticas ambientais</li>
+                            <li>Apoie projetos de compensação de carbono</li>
+                        </ul>
+                    </article>
+
+                    <article class="tip-card">
+                        <h3>📱 Tecnologia Sustentável</h3>
+                        <ul>
+                            <li>Use modo escuro economiza 5-10% de bateria</li>
+                            <li>Recarregue à noite (energia mais limpa em algumas regiões)</li>
+                            <li>Estique vida do celular reduz waste eletrônico</li>
+                            <li>Doar eletrônicos usados é melhor que descartar</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <aside class="tips-sidebar" role="complementary">
+                    <h3>📚 Recursos Úteis</h3>
+                    <ul>
+                        <li><a href="#" class="resource-link">Carbon Footprint Calculator - Global</a></li>
+                        <li><a href="#" class="resource-link">Blog: Sustentabilidade no Dia a Dia</a></li>
+                        <li><a href="#" class="resource-link">Mapa de Pontos de Reciclagem</a></li>
+                        <li><a href="#" class="resource-link">Certificados de Neutralização</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <article class="footer-section">
+                    <h3>Sobre</h3>
+                    <p>
+                        A Calculadora de CO2 do Eco-trip foi desenvolvida para aumentar a consciência sobre 
+                        sustentabilidade e inspirar ações práticas para reduzir sua pegada de carbono.
+                    </p>
+                </article>
+
+                <article class="footer-section">
+                    <h3>Créditos e Fontes</h3>
+                    <ul>
+                        <li>Fatores de emissão: IPCC (Painel Intergovernamental de Mudanças Climáticas)</li>
+                        <li>Dados do Brasil: Instituto de Pesquisa Econômica Aplicada (IPEA)</li>
+                        <li>Design: Princípios de UX/UI para acessibilidade</li>
+                    </ul>
+                </article>
+
+                <article class="footer-section">
+                    <h3>Contato e Parcerias</h3>
+                    <p>
+                        Interessado em usar nossa calculadora em seu site ou projeto?<br>
+                        <a href="mailto:contato@ecotrip.com" class="footer-link">contato@ecotrip.com</a>
+                    </p>
+                </article>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Eco-trip - Viagens e Vida Sustentáveis. Todos os direitos reservados.</p>
+                <p class="footer-legal">
+                    <a href="#" class="footer-link">Política de Privacidade</a> | 
+                    <a href="#" class="footer-link">Termos de Uso</a> | 
+                    <a href="#" class="footer-link">Acessibilidade</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modais e Overlays -->
+    <div id="share-modal" class="modal hidden" aria-labelledby="share-modal-title" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fechar modal">✕</button>
+            <h2 id="share-modal-title">Compartilhar seu Resultado</h2>
+            
+            <div class="share-methods">
+                <button class="share-btn" id="share-whatsapp" aria-label="Compartilhar no WhatsApp">
+                    💬 WhatsApp
+                </button>
+                <button class="share-btn" id="share-twitter" aria-label="Compartilhar no Twitter">
+                    𝕏 Twitter
+                </button>
+                <button class="share-btn" id="share-facebook" aria-label="Compartilhar no Facebook">
+                    📘 Facebook
+                </button>
+                <button class="share-btn" id="share-copy" aria-label="Copiar resultado">
+                    📋 Copiar Resultado
+                </button>
+            </div>
+
+            <div id="share-message" class="share-message">
+                <p>Minha pegada de carbono anual é de <span id="share-co2">0</span> kg CO2e. 
+                   Calcule a sua em ecotrip.com e veja como você pode contribuir para um planeta mais sustentável! 🌍</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip Container -->
+    <div id="tooltip" class="tooltip hidden" role="tooltip"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
